@@ -3,6 +3,7 @@ package com.example.bankapp.controllers;
 import com.example.bankapp.models.Customer;
 import com.example.bankapp.services.BankingService;
 import com.example.bankapp.services.CustomerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,11 +45,11 @@ public class CustomerControllers {
     return customerService.changePassword(customerId, oldPassword, newPassword);
   }
 
-  @PostMapping("/transfer")
+  @PostMapping("/transfer/amount")
   public String transferAmount(
-    @RequestParam Long fromAccount,
-    @RequestParam Long toAccount,
-    @RequestParam String ifsc,
+    @RequestBody Long fromAccount,
+    @RequestBody Long toAccount,
+    @RequestBody String ifsc,
     @RequestParam double amount
   ) {
     boolean success = bankingService.transferAmount(
