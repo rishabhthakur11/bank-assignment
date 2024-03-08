@@ -43,29 +43,24 @@ public class BankingService {
         sender.getAccountNumber().equals(fromAccount.toString()) &&
         receiver.getAccountNumber().equals(toAccount.toString())
       ) {
-        if (
-          sender.getModule().equals("enabled") &&
-          receiver.getModule().equals("enabled")
-        ) {
-          if (sender.getBalance() >= amount) {
-            // Update sender's balance
-            sender.setBalance(sender.getBalance() - amount);
-            customerRepository.save(sender);
+        if (sender.getBalance() >= amount) {
+          // Update sender's balance
+          sender.setBalance(sender.getBalance() - amount);
+          customerRepository.save(sender);
 
-            // Update receiver's balance
-            receiver.setBalance(receiver.getBalance() + amount);
-            customerRepository.save(receiver);
+          // Update receiver's balance
+          receiver.setBalance(receiver.getBalance() + amount);
+          customerRepository.save(receiver);
 
-            // Save transaction details
-            Transaction transaction = new Transaction();
-            transaction.setFromAccount(fromAccount);
-            transaction.setToAccount(toAccount);
-            transaction.setIfsc(ifsc);
-            transaction.setAmount(amount);
-            transactionRepository.save(transaction);
+          // Save transaction details
+          Transaction transaction = new Transaction();
+          transaction.setFromAccount(fromAccount);
+          transaction.setToAccount(toAccount);
+          transaction.setIfsc(ifsc);
+          transaction.setAmount(amount);
+          transactionRepository.save(transaction);
 
-            return true;
-          }
+          return true;
         }
       }
     }
